@@ -1,0 +1,50 @@
+{
+  "_comentario": "Tu política de inversión: las reglas que decidís UNA vez, en frío, para no decidir cada vez en caliente. Los porcentajes de abajo son un punto de partida editable, NO una recomendación. Cambialos y el agente trabaja con los tuyos.",
+  "confirmado_por_max": false,
+  "objetivo": {
+    "nucleo": 0.7,
+    "accion": 0.2,
+    "metales": 0.05,
+    "cripto": 0.05,
+    "privado": 0.0
+  },
+  "descripcion_clases": {
+    "nucleo": "ETFs de índice amplio (SPY, VOO). Es lo que hace el trabajo sin que vos hagas nada.",
+    "accion": "Acciones individuales. Acá va tu criterio, y acá está el riesgo de equivocarte.",
+    "metales": "Oro y plata: cobertura, no motor de rendimiento.",
+    "cripto": "Alta volatilidad. Dimensionala como algo que podría valer la mitad.",
+    "privado": "Empresas privadas o activos ilíquidos. No se pueden vender cuando querés."
+  },
+  "reglas": {
+    "tolerancia_pp": 5,
+    "max_por_posicion_pct": 0.15,
+    "max_por_accion_individual_pct": 0.1,
+    "min_por_posicion_pct": 0.02,
+    "orden_minima": 250,
+    "comision_por_operacion": null,
+    "comision_pct": null,
+    "max_comision_sobre_orden": 0.005,
+    "modo_rebalanceo": "aporte",
+    "efectivo_objetivo_pct": 0.0,
+    "clases_exentas_del_maximo": [
+      "nucleo"
+    ]
+  },
+  "explicacion_reglas": {
+    "tolerancia_pp": "Puntos porcentuales de desvío tolerados antes de rebalancear. Rebalancear de más sólo genera comisiones.",
+    "max_por_posicion_pct": "Techo de cualquier posición sobre el total de la cartera.",
+    "max_por_accion_individual_pct": "Techo más estricto para una acción suelta: una empresa puede caer 50% y no volver.",
+    "min_por_posicion_pct": "Piso: por debajo de esto, la posición no mueve la aguja y sólo suma comisiones y ruido mental.",
+    "orden_minima": "Importe mínimo por operación para que la comisión no se coma el resultado.",
+    "comision_por_operacion": "Comisión fija por operación en tu plan actual. Completala: la app ofrece un upgrade a operaciones sin comisión, y sin este dato no se puede evaluar si conviene.",
+    "max_comision_sobre_orden": "Si la comisión supera este % del importe, la orden no se hace.",
+    "modo_rebalanceo": "'aporte' = rebalancear comprando lo que falta con dinero nuevo (sin vender, sin impuestos). 'venta' = permite vender lo que sobra.",
+    "clases_exentas_del_maximo": "Clases que no tienen techo por posición: un ETF de índice amplio ya son cientos de empresas, concentrarse ahí no es concentrarse."
+  },
+  "prohibiciones": [
+    "No comprar por titular, hilo de redes sociales ni recomendación sin tesis propia escrita.",
+    "No promediar a la baja una posición perdedora sin una razón distinta a 'está más barata'.",
+    "No vender por pánico un día rojo: toda venta pasa por el checklist de .claude/skills/orden/.",
+    "No abrir una posición nueva sin cerrar o justificar las que ya están por debajo del mínimo."
+  ]
+}

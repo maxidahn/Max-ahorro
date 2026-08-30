@@ -24,10 +24,10 @@ python3 herramientas/plan.py
 
 Sólo requiere Python 3.10+. No hay dependencias que instalar.
 
-## El agente
+## Los dos agentes
 
-`.claude/agents/ahorro.md` define el agente `ahorro`. En Claude Code, dentro de este
-repo, alcanza con pedirle cosas como:
+**`ahorro`** (`.claude/agents/ahorro.md`) — cuánto entra, cuánto sale, cuánto queda y
+dónde ponerlo. En Claude Code, dentro de este repo, alcanza con pedirle cosas como:
 
 - "¿cómo vengo con el ahorro?"
 - "¿dónde conviene que ponga el excedente de este mes?"
@@ -35,22 +35,49 @@ repo, alcanza con pedirle cosas como:
 - "hagamos la revisión mensual" → sigue `.claude/skills/revision-mensual/SKILL.md`
 - "¿me conviene Openbank remunerado o el Future Fund para el fondo de emergencia?"
 
-Lo que el agente **no** hace: mover plata, operar, prometer rendimientos o reemplazar a
-un asesor financiero. Calcula, ordena y te dice qué números faltan.
+**`cartera`** (`.claude/agents/cartera.md`) — comprar y vender con método. Trabaja sobre
+tus posiciones reales y sobre tu política de inversión:
+
+- "¿compro NVDA?" · "¿vendo SLV que está en rojo?"
+- "me entraron 1.000 USD, ¿dónde los pongo?"
+- "¿cómo viene la cartera?" → concentración, desvíos, reglas que no se cumplen
+- antes de cualquier orden → checklist de `.claude/skills/orden/SKILL.md`
+
+Lo que los agentes **no** hacen: mover plata, mandar órdenes, predecir precios, prometer
+rendimientos o reemplazar a un asesor financiero. Calculan, ordenan, aplican **tus**
+reglas y te dicen qué números faltan.
+
+## Cartera
+
+```bash
+python3 herramientas/cartera.py                     # composición, concentración, reglas rotas
+python3 herramientas/cartera.py aporte --monto 1000 # colocar plata nueva sin vender nada
+python3 herramientas/cartera.py orden --tipo compra --ticker NVDA --monto 500 --clase accion
+```
+
+Tus posiciones están en `datos/cartera.json` y tus reglas en `datos/objetivo.json`
+(techos por posición, piso por posición, banda de rebalanceo, orden mínima, comisión).
+Los porcentajes objetivo que vienen cargados son un punto de partida editable, no una
+recomendación: mientras `confirmado_por_max` siga en `false`, la herramienta lo avisa en
+cada informe.
 
 ## Estructura
 
 ```
-.claude/agents/ahorro.md              el agente
+.claude/agents/ahorro.md              el agente de ahorro
 .claude/skills/revision-mensual/      ritual de cierre de mes
 datos/perfil.json                     ingresos, meta de ahorro, colchón, deudas, tipo de cambio
 datos/cuentas.json                    cada instrumento: tasa, riesgo, liquidez, costos
 datos/metas.json                      metas con monto y fecha
+datos/cartera.json                    posiciones de la cuenta de inversión
+datos/objetivo.json                   tu política: asignación objetivo y reglas de operación
+datos/operaciones.csv                 registro de compras y ventas, con el motivo de cada una
 datos/saldos.csv                      fotos de saldo por cuenta y fecha
 datos/movimientos.csv                 ingresos, gastos, aportes, comisiones
 datos/ejemplo/                        dataset ficticio para probar
 herramientas/resumen.py               patrimonio, flujo, tasa de ahorro, fondo de emergencia
 herramientas/plan.py                  oportunidades, plan mensual y proyección
+herramientas/cartera.py               composición, rebalanceo y evaluación de órdenes
 herramientas/registrar.py             carga de datos sin editar CSV a mano
 herramientas/pruebas.py               tests de las herramientas
 docs/instrumentos.md                  qué verificar de ARQ, OnTop y Openbank
@@ -65,6 +92,8 @@ python3 herramientas/registrar.py saldo   --cuenta ontop --monto 5500
 python3 herramientas/registrar.py gasto   --categoria supermercado --monto 480
 python3 herramientas/registrar.py ingreso --categoria sueldo --monto 4200
 python3 herramientas/registrar.py aporte  --cuenta arq --monto 400
+python3 herramientas/registrar.py operacion --tipo compra --ticker SPY --monto 500 \
+    --comision 3 --motivo "núcleo por debajo del objetivo" --regla tolerancia_pp
 python3 herramientas/registrar.py cuenta  --id openbank-remunerada \
     --nombre "Openbank saldo remunerado" --moneda USD --tasa 0.035 \
     --riesgo 1 --liquidez 1 --proposito liquidez --fuente "app Openbank, 2026-08-30"

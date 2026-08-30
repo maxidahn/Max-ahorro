@@ -13,12 +13,14 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import cartera  # noqa: E402
 import plan  # noqa: E402
 import registrar  # noqa: E402
 import resumen  # noqa: E402
 from comun import Cambio, ErrorDatos, a_numero, cuentas_por_id, leer_json  # noqa: E402
 
-EJEMPLO = Path(__file__).resolve().parent.parent / "datos" / "ejemplo"
+RAIZ = Path(__file__).resolve().parent.parent
+EJEMPLO = RAIZ / "datos" / "ejemplo"
 HOY = date(2026, 8, 30)
 
 
@@ -171,6 +173,81 @@ class TestRegistrar(unittest.TestCase):
         )
         despues = resumen.calcular(self.datos, 6, HOY)["gasto_por_categoria"]["salidas"]
         self.assertAlmostEqual(despues - antes, 100.0, places=2)  # 145.000 ARS a 1450
+
+
+class TestCartera(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.a = cartera.analizar(RAIZ / "datos")
+
+    def test_los_pesos_suman_uno(self):
+        self.assertAlmostEqual(sum(p["peso"] for p in self.a["posiciones"]), 1.0, places=6)
+
+    def test_las_posiciones_cuadran_con_el_total_declarado(self):
+        self.assertAlmostEqual(sum(p["valor"] for p in self.a["posiciones"]), self.a["total"], 2)
+
+    def test_calcula_el_resultado_implicito_de_lo_no_cargado(self):
+        # La app declara +997,42 y lo cargado suma más: la diferencia es de las posiciones que faltan.
+        self.assertIsNotNone(self.a["pl_implicito_no_cargado"])
+        self.assertAlmostEqual(
+            self.a["pl_total"] + self.a["pl_implicito_no_cargado"], self.a["pl_declarado"], 2
+        )
+
+    def test_el_nucleo_esta_exento_del_techo_por_posicion(self):
+        textos = " ".join(al["texto"] for al in self.a["alertas"])
+        self.assertNotIn("SPY pesa", textos)
+        self.assertIn("GOOGL", textos)
+
+    def test_marca_las_posiciones_por_debajo_del_minimo(self):
+        chicas = {
+            al["texto"].split()[0]
+            for al in self.a["alertas"]
+            if al["regla"] == "min_por_posicion_pct"
+        }
+        self.assertIn("SLV", chicas)
+        self.assertNotIn("GOOGL", chicas)
+
+    def test_bloquea_mientras_falten_datos(self):
+        bloqueantes = {al["regla"] for al in self.a["alertas"] if al["nivel"] == "bloqueante"}
+        self.assertIn("costos", bloqueantes)      # falta la comisión
+        self.assertIn("politica", bloqueantes)    # objetivo.json sin confirmar
+        self.assertIn("datos", bloqueantes)       # posiciones sin identificar
+
+    def test_el_aporte_se_reparte_entero_entre_las_clases_flojas(self):
+        ordenes = cartera.ordenes_de_aporte(self.a, 1000)
+        self.assertAlmostEqual(sum(o["importe"] for o in ordenes), 1000, places=2)
+        self.assertEqual(ordenes[0]["clase"], "nucleo")  # es la clase más por debajo
+
+    def test_el_aporte_avisa_de_ordenes_muy_chicas(self):
+        ordenes = cartera.ordenes_de_aporte(self.a, 1000)
+        chicas = [o for o in ordenes if o["importe"] < 250]
+        self.assertTrue(chicas)
+        self.assertTrue(all(o["problemas"] for o in chicas))
+
+    def test_una_compra_grande_rompe_el_techo_de_accion(self):
+        ev = cartera.evaluar_orden(self.a, "compra", "MU", 3000, "accion")
+        self.assertEqual(ev["veredicto"], "revisar")
+        self.assertTrue(any("techo" in p for p in ev["problemas"]))
+
+    def test_una_compra_chica_queda_bajo_el_minimo(self):
+        ev = cartera.evaluar_orden(self.a, "compra", "NVDA", 200, "accion")
+        self.assertTrue(any("mínimo" in p for p in ev["problemas"]))
+
+    def test_no_se_puede_vender_mas_de_lo_que_hay(self):
+        ev = cartera.evaluar_orden(self.a, "venta", "SLV", 5000, None)
+        self.assertTrue(any("vendiendo" in p for p in ev["problemas"]))
+
+    def test_la_comision_se_calcula_fija_mas_variable(self):
+        self.assertEqual(cartera.costo_orden(1000, {"comision_por_operacion": 3}), 3)
+        self.assertEqual(cartera.costo_orden(1000, {"comision_pct": 0.002}), 2)
+        self.assertEqual(
+            cartera.costo_orden(1000, {"comision_por_operacion": 1, "comision_pct": 0.002}), 3
+        )
+
+    def test_una_compra_con_comision_cara_se_rechaza(self):
+        a = dict(self.a, reglas=dict(self.a["reglas"], comision_por_operacion=10, orden_minima=100))
+        ev = cartera.evaluar_orden(a, "compra", "SPY", 300, "nucleo")
+        self.assertTrue(any("comisión" in p.lower() for p in ev["problemas"]))
 
 
 class TestPlantillas(unittest.TestCase):

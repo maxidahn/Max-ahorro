@@ -1,6 +1,6 @@
 {
   "_comentario": "Un objeto por instrumento donde tenés (o podrías tener) plata. tasa_anual_estimada es decimal (0.04 = 4% anual). Ninguna tasa se asume: se verifica y se anota la fuente y la fecha.",
-  "actualizado": null,
+  "actualizado": "2026-08-30",
   "cuentas": [
     {
       "id": "arq",
@@ -22,7 +22,7 @@
       "aporte_mensual_objetivo": null,
       "aporte_automatico": false,
       "activa": true,
-      "notas": "Trading: el rendimiento es variable y no garantizado. Cargá el retorno REAL de los ultimos 12 meses, no el esperado."
+      "notas": "Detalle de posiciones en datos/cartera.json. Resultado acumulado declarado por la app: +997,42 USD sobre un costo estimado de 25.406,84 = +3,93%, sin período conocido, así que NO es anualizable ni comparable contra una tasa hasta saber desde cuándo. El +6.207,55 de 6 meses que muestra la app incluye depósitos: no es rendimiento."
     },
     {
       "id": "ontop",

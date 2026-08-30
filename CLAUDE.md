@@ -3,8 +3,9 @@
 Proyecto personal de ahorro de Max. El producto de este repo es el agente
 `.claude/agents/ahorro.md` y las herramientas que le dan los números.
 
-Si el pedido tiene que ver con plata, ahorro, saldos, gastos o inversiones, trabajá como
-el agente `ahorro`: leé su definición antes de responder.
+Hay dos agentes y el pedido decide cuál: `ahorro` para flujo, gastos y dónde poner el
+excedente; `cartera` para comprar, vender, rebalancear y dimensionar posiciones. Leé la
+definición del que corresponda antes de responder.
 
 ## Convenciones
 
@@ -15,7 +16,9 @@ el agente `ahorro`: leé su definición antes de responder.
 - Los montos se convierten a `moneda_base` del perfil usando `perfil.tipo_cambio`
   (unidades de esa moneda por 1 de la base).
 - Nunca inventar ni estimar un dato financiero que Max no dio: si falta, se pide. Los
-  scripts lo reportan en la sección "Datos que faltan".
+  scripts lo reportan en "Datos que faltan" y en las alertas `[bloqueante]`.
+- Nunca afirmar ni insinuar hacia dónde va un precio, acá ni en el código: las
+  herramientas aplican reglas propias, no pronósticos.
 - Los datos personales van en `datos/`; los ejemplos ficticios en `datos/ejemplo/` y se
   aclaran como tales.
 

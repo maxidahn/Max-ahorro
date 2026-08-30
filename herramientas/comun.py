@@ -20,6 +20,7 @@ ARCHIVOS = {
     "metas": "metas.json",
     "saldos": "saldos.csv",
     "movimientos": "movimientos.csv",
+    "operaciones": "operaciones.csv",
 }
 
 COLUMNAS_SALDOS = ["fecha", "cuenta_id", "saldo", "moneda", "nota"]
@@ -32,6 +33,7 @@ COLUMNAS_MOVIMIENTOS = [
     "cuenta_id",
     "descripcion",
 ]
+COLUMNAS_OPERACIONES = ["fecha", "tipo", "ticker", "monto", "comision", "motivo", "regla"]
 TIPOS_MOVIMIENTO = {"ingreso", "gasto", "aporte", "retiro", "rendimiento", "comision"}
 
 

@@ -43,6 +43,32 @@ sólo después la asignación del capital.
 Los umbrales están arriba de todo en `herramientas/plan.py`. Cambialos si tu criterio es
 otro; están ahí para discutirse, no para creerse.
 
+## Reglas de la cartera (`cartera.py`)
+
+Salen todas de `datos/objetivo.json`, que es tuyo y editable. La herramienta no tiene
+criterio propio sobre qué comprar: sólo mide y compara contra lo que vos escribiste.
+
+| Regla | Qué hace |
+|---|---|
+| `tolerancia_pp` | Banda de desvío por clase antes de rebalancear. Evita operar por ruido. |
+| `max_por_posicion_pct` | Techo por posición. No aplica a las clases de `clases_exentas_del_maximo`: un ETF de índice ya está diversificado por dentro. |
+| `max_por_accion_individual_pct` | Techo más estricto para una empresa sola, que puede caer y no volver. |
+| `min_por_posicion_pct` | Piso: por debajo, la posición no cambia el resultado y sí suma comisiones. |
+| `orden_minima` y `max_comision_sobre_orden` | Frenan las órdenes donde el costo se come el beneficio. |
+| `modo_rebalanceo` | `aporte` rebalancea comprando con dinero nuevo; `venta` permite vender. |
+
+El orden de preferencia para corregir un desvío es siempre: **aportar > rebalancear
+comprando > vender**. Vender realiza ganancias (impuesto) y paga comisión, así que es el
+último recurso, salvo que la posición rompa un techo de riesgo.
+
+## Lo que estas herramientas no hacen
+
+No estiman el valor de una empresa, no proyectan precios, no leen el mercado y no
+comparan tu cartera contra un índice. Nada de eso está implementado porque nada de eso se
+puede hacer con confianza desde acá. Lo que sí hacen es medir peso, costo, concentración,
+liquidez y coherencia con tus propias reglas, que es donde las decisiones se ganan o se
+pierden de manera predecible.
+
 ## Límites conocidos
 
 - El impacto anual es una **estimación con las tasas cargadas**. Si las tasas están
@@ -53,4 +79,6 @@ otro; están ahí para discutirse, no para creerse.
   devaluación ni inflación: comparar un rendimiento en pesos con uno en dólares requiere
   una decisión tuya sobre qué esperás del tipo de cambio.
 - Los rendimientos de trading son pasados, no futuros, y pueden ser negativos.
+- Los pesos de solapamiento (`peso_en_nucleo`) hay que cargarlos verificados: sin eso, la
+  exposición real a una empresa que además está dentro del índice queda subestimada.
 - Nada de esto es asesoramiento financiero profesional.

@@ -193,9 +193,12 @@ def imprimir(r: dict) -> None:
     b = r["moneda_base"]
     print(titulo(f"Resumen de ahorro — {r['fecha']}"))
     print(f"Patrimonio total: {money(r['patrimonio'], b)}")
-    delta = r["variacion_mes"]
-    signo = "+" if delta >= 0 else "−"
-    print(f"Variación desde fin del mes anterior: {signo}{money(abs(delta), b)}")
+    if r["patrimonio_mes_anterior"]:
+        delta = r["variacion_mes"]
+        signo = "+" if delta >= 0 else "−"
+        print(f"Variación desde fin del mes anterior: {signo}{money(abs(delta), b)}")
+    else:
+        print("Variación mensual: sin saldos del mes anterior para comparar.")
 
     print(subtitulo("Dónde está la plata"))
     total = r["patrimonio"] or 1

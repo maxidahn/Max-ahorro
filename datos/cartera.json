@@ -1,0 +1,124 @@
+{
+  "_comentario": "Posiciones leídas de las capturas de la app del 2026-08-30. Lo que no se veía en pantalla quedó en la fila POR_CONFIRMAR: completalo antes de tomar decisiones grandes.",
+  "cuenta_id": "arq",
+  "moneda": "USD",
+  "actualizado": "2026-08-30",
+  "fuente": "capturas de la app, 2026-08-30",
+  "total_declarado": 26404.26,
+  "efectivo": 0,
+  "pl_declarado": 997.42,
+  "sobre_la_variacion": "Las flechas verdes/rojas de la app se interpretan acá como resultado acumulado (P/L) de cada posición, porque su suma da el total de la cabecera. Verificalo en la app: si fuese la variación del día o del período, el análisis de ganadoras/perdedoras cambia.",
+  "posiciones": [
+    {
+      "ticker": "SPY",
+      "nombre": "SPDR S&P 500 ETF Trust",
+      "valor": 11644.83,
+      "pl": 974.92,
+      "clase": "nucleo",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": "ETF índice S&P 500. Es el núcleo diversificado de la cartera."
+    },
+    {
+      "ticker": "GOOGL",
+      "nombre": "Alphabet",
+      "valor": 7625.41,
+      "pl": 118.76,
+      "clase": "accion",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": "Además de la posición directa, SPY ya tiene Alphabet adentro: cargá su peso en peso_en_nucleo (verificado) para ver la exposición real."
+    },
+    {
+      "ticker": "MU",
+      "nombre": "Micron Technology",
+      "valor": 2683.35,
+      "pl": 999.17,
+      "clase": "accion",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": "Semiconductores. Es la posición con mayor ganancia acumulada de la cartera."
+    },
+    {
+      "ticker": "ASML",
+      "nombre": "ASML Holding NV",
+      "valor": 612.52,
+      "pl": 37.7,
+      "clase": "accion",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": "Semiconductores (equipos). Se solapa temáticamente con MU."
+    },
+    {
+      "ticker": "NOC",
+      "nombre": "Northrop Grumman",
+      "valor": 565.48,
+      "pl": -163.31,
+      "clase": "accion",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": ""
+    },
+    {
+      "ticker": "TSLA",
+      "nombre": "Tesla",
+      "valor": 477.68,
+      "pl": -173.29,
+      "clase": "accion",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": ""
+    },
+    {
+      "ticker": "IBIT",
+      "nombre": "iShares Bitcoin Trust ETF",
+      "valor": 411.98,
+      "pl": -88.01,
+      "clase": "cripto",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": ""
+    },
+    {
+      "ticker": "SLV",
+      "nombre": "iShares Silver Trust",
+      "valor": 385.33,
+      "pl": -214.66,
+      "clase": "metales",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": "Peor resultado relativo de la cartera: -36% sobre su costo estimado."
+    },
+    {
+      "ticker": "GOLD",
+      "nombre": "Gold.com (según la app)",
+      "valor": 383.17,
+      "pl": -9.2,
+      "clase": "metales",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "verificar": "El ticker GOLD en NYSE corresponde a una minera (Barrick), que es una ACCIÓN, no oro físico ni un ETF de oro. Confirmá en la app qué estás teniendo: cambia la clase y el riesgo.",
+      "notas": ""
+    },
+    {
+      "ticker": "SPACEX",
+      "nombre": "SpaceX",
+      "valor": 327.7,
+      "pl": null,
+      "clase": "privado",
+      "liquidez": "baja",
+      "peso_en_nucleo": null,
+      "notas": "Empresa privada: sin precio de mercado continuo. Verificá cómo se valúa, qué spread tiene y si podés vender cuando quieras. Hasta saberlo, tratala como plata inmovilizada."
+    },
+    {
+      "ticker": "POR_CONFIRMAR",
+      "nombre": "Posiciones que no entraban en la captura (incluye ORCL)",
+      "valor": 1286.81,
+      "pl": null,
+      "clase": "por_confirmar",
+      "liquidez": "alta",
+      "peso_en_nucleo": null,
+      "notas": "Diferencia entre el total declarado (26.404,26) y las posiciones visibles. En la captura se alcanzaba a ver Oracle (ORCL, resultado -111,46). Reemplazá esta fila por las posiciones reales."
+    }
+  ]
+}

@@ -6,6 +6,8 @@ Ejemplos:
     python3 herramientas/registrar.py gasto --categoria supermercado --monto 480
     python3 herramientas/registrar.py ingreso --categoria sueldo --monto 4200
     python3 herramientas/registrar.py aporte --cuenta ontop --monto 300 --fecha 2026-08-15
+    python3 herramientas/registrar.py operacion --tipo compra --ticker SPY --monto 500 \
+        --motivo "rebalanceo: núcleo por debajo del objetivo" --regla tolerancia_pp
     python3 herramientas/registrar.py cuenta --id openbank-remunerada \
         --nombre "Openbank saldo remunerado" --moneda USD --tasa 0.035 \
         --riesgo 1 --liquidez 1 --proposito liquidez --fuente "app, 2026-08-30"
@@ -19,6 +21,7 @@ from datetime import date
 
 from comun import (
     COLUMNAS_MOVIMIENTOS,
+    COLUMNAS_OPERACIONES,
     COLUMNAS_SALDOS,
     ErrorDatos,
     a_fecha,
@@ -63,6 +66,15 @@ def main(argv=None) -> int:
         p.add_argument("--fecha")
         p.add_argument("--descripcion", default="")
 
+    p_op = sub.add_parser("operacion", help="registrar una compra o venta de la cartera")
+    p_op.add_argument("--tipo", choices=["compra", "venta"], required=True)
+    p_op.add_argument("--ticker", required=True)
+    p_op.add_argument("--monto", required=True)
+    p_op.add_argument("--comision", default="")
+    p_op.add_argument("--motivo", required=True, help="por qué la hacés, en tus palabras")
+    p_op.add_argument("--regla", default="", help="qué regla de objetivo.json la justifica")
+    p_op.add_argument("--fecha")
+
     p_cta = sub.add_parser("cuenta", help="alta o actualización de una cuenta")
     p_cta.add_argument("--id", required=True)
     p_cta.add_argument("--nombre")
@@ -97,6 +109,24 @@ def main(argv=None) -> int:
             }
             agregar_csv("saldos", datos, fila, COLUMNAS_SALDOS)
             print(f"Saldo registrado: {args.cuenta} = {fila['saldo']} {moneda} ({fecha})")
+            return 0
+
+        if args.comando == "operacion":
+            fecha = a_fecha(args.fecha).isoformat() if args.fecha else hoy
+            fila = {
+                "fecha": fecha,
+                "tipo": args.tipo,
+                "ticker": args.ticker.upper(),
+                "monto": f"{a_numero(args.monto):.2f}",
+                "comision": f"{a_numero(args.comision, 'comisión'):.2f}" if args.comision else "",
+                "motivo": args.motivo,
+                "regla": args.regla,
+            }
+            agregar_csv("operaciones", datos, fila, COLUMNAS_OPERACIONES)
+            print(
+                f"Operación registrada: {args.tipo} {fila['ticker']} por {fila['monto']} ({fecha})"
+            )
+            print("Actualizá datos/cartera.json con el saldo nuevo de la posición.")
             return 0
 
         if args.comando == "cuenta":

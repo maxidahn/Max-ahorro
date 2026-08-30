@@ -29,7 +29,10 @@ El tipo de cambio de `perfil.json` se actualiza en la misma pasada.
 ```bash
 python3 herramientas/resumen.py --meses 6
 python3 herramientas/plan.py
+python3 herramientas/cartera.py
 ```
+
+Para la cartera, actualizá antes `datos/cartera.json` con los valores de cada posición.
 
 ## 3. Comparar contra el mes pasado
 
@@ -40,6 +43,10 @@ Leé la última revisión en `revisiones/`. Respondé explícitamente:
 - ¿El patrimonio creció por aportes o por rendimiento? (son cosas distintas: la primera
   depende de Max, la segunda del mercado)
 - ¿Alguna oportunidad cerrada o nueva?
+- Releé los motivos de las operaciones de los últimos tres meses en
+  `datos/operaciones.csv` y contestá una sola pregunta: **¿le ganaron a no haber hecho
+  nada?** Si la respuesta es no dos meses seguidos, la conclusión no es operar mejor: es
+  operar menos.
 
 ## 4. Escribir la revisión
 
@@ -56,6 +63,7 @@ Creá `revisiones/AAAA-MM.md` con esta estructura:
 | Aportes | | | |
 | Gasto promedio | | | |
 | Meses de emergencia cubiertos | | | |
+| Desvío del núcleo vs objetivo | | | |
 
 ## Qué pasó
 (2-4 líneas: qué explica el cambio)
