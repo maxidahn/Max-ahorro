@@ -1,0 +1,23 @@
+{
+  "_comentario": "Datos FICTICIOS.",
+  "metas": [
+    {
+      "id": "emergencia",
+      "nombre": "Fondo de emergencia 6 meses",
+      "objetivo": 16800,
+      "moneda": "USD",
+      "fecha_objetivo": "2027-06-30",
+      "cuenta_id": "openbank-remunerada",
+      "prioridad": 1
+    },
+    {
+      "id": "viaje",
+      "nombre": "Viaje",
+      "objetivo": 4000,
+      "moneda": "USD",
+      "fecha_objetivo": "2027-01-31",
+      "cuenta_id": "openbank-remunerada",
+      "prioridad": 3
+    }
+  ]
+}

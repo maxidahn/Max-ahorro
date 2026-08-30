@@ -1,0 +1,41 @@
+{
+  "_comentario": "Datos FICTICIOS para probar las herramientas: python3 herramientas/resumen.py --datos datos/ejemplo",
+  "moneda_base": "USD",
+  "tipo_cambio": {
+    "USD": 1,
+    "ARS": 1450
+  },
+  "tipo_cambio_actualizado": "2026-08-28",
+  "tipo_cambio_fuente": "ejemplo",
+  "ingreso_mensual": {
+    "monto": 4200,
+    "moneda": "USD",
+    "estabilidad": "estable",
+    "notas": "ejemplo"
+  },
+  "meta_tasa_ahorro": 0.3,
+  "colchon_operativo": {
+    "monto": 2500,
+    "moneda": "USD",
+    "notas": "ejemplo"
+  },
+  "fondo_emergencia_meses_objetivo": 6,
+  "perfil_riesgo": "moderado",
+  "horizonte_anios": 10,
+  "deudas": [
+    {
+      "id": "tarjeta",
+      "nombre": "Tarjeta en cuotas",
+      "saldo": 1800,
+      "moneda": "USD",
+      "tasa_anual": 0.55,
+      "cuota_mensual": 220,
+      "notas": "ejemplo"
+    }
+  ],
+  "revision": {
+    "dia_del_mes": 1,
+    "ultima": "2026-08-01"
+  },
+  "notas": "Dataset de ejemplo, no son datos reales."
+}

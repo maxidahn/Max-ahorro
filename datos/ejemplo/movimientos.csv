@@ -1,0 +1,62 @@
+fecha,tipo,categoria,monto,moneda,cuenta_id,descripcion
+2026-03-05,ingreso,sueldo,4200,USD,openbank-vista,Cobro mensual
+2026-03-12,gasto,alquiler,1128.1,USD,openbank-vista,
+2026-03-12,gasto,supermercado,487.61,USD,openbank-vista,
+2026-03-12,gasto,suscripciones,100.96,USD,openbank-vista,
+2026-03-12,gasto,salidas,284.61,USD,openbank-vista,
+2026-03-12,gasto,transporte,124.08,USD,openbank-vista,
+2026-03-12,gasto,servicios,178.46,USD,openbank-vista,
+2026-03-12,gasto,salud,128.03,USD,openbank-vista,
+2026-03-15,aporte,aporte,300,USD,ontop,Aporte automático
+2026-03-20,comision,comision,15.1,USD,arq,Comisiones de operación
+2026-04-05,ingreso,sueldo,4200,USD,openbank-vista,Cobro mensual
+2026-04-12,gasto,alquiler,1045.78,USD,openbank-vista,
+2026-04-12,gasto,supermercado,524.37,USD,openbank-vista,
+2026-04-12,gasto,suscripciones,87.16,USD,openbank-vista,
+2026-04-12,gasto,salidas,286.03,USD,openbank-vista,
+2026-04-12,gasto,transporte,120.74,USD,openbank-vista,
+2026-04-12,gasto,servicios,199.21,USD,openbank-vista,
+2026-04-12,gasto,salud,130.33,USD,openbank-vista,
+2026-04-15,aporte,aporte,300,USD,ontop,Aporte automático
+2026-04-20,comision,comision,11.13,USD,arq,Comisiones de operación
+2026-05-05,ingreso,sueldo,4200,USD,openbank-vista,Cobro mensual
+2026-05-12,gasto,alquiler,1215.39,USD,openbank-vista,
+2026-05-12,gasto,supermercado,591.2,USD,openbank-vista,
+2026-05-12,gasto,suscripciones,99.21,USD,openbank-vista,
+2026-05-12,gasto,salidas,309.74,USD,openbank-vista,
+2026-05-12,gasto,transporte,137.29,USD,openbank-vista,
+2026-05-12,gasto,servicios,164.1,USD,openbank-vista,
+2026-05-12,gasto,salud,156.05,USD,openbank-vista,
+2026-05-15,aporte,aporte,300,USD,ontop,Aporte automático
+2026-05-20,comision,comision,12.05,USD,arq,Comisiones de operación
+2026-06-05,ingreso,sueldo,4200,USD,openbank-vista,Cobro mensual
+2026-06-12,gasto,alquiler,1076.47,USD,openbank-vista,
+2026-06-12,gasto,supermercado,483.31,USD,openbank-vista,
+2026-06-12,gasto,suscripciones,92.83,USD,openbank-vista,
+2026-06-12,gasto,salidas,342.25,USD,openbank-vista,
+2026-06-12,gasto,transporte,113.42,USD,openbank-vista,
+2026-06-12,gasto,servicios,188.17,USD,openbank-vista,
+2026-06-12,gasto,salud,148.36,USD,openbank-vista,
+2026-06-15,aporte,aporte,300,USD,ontop,Aporte automático
+2026-06-20,comision,comision,13.21,USD,arq,Comisiones de operación
+2026-07-05,ingreso,sueldo,4200,USD,openbank-vista,Cobro mensual
+2026-07-12,gasto,alquiler,1192.48,USD,openbank-vista,
+2026-07-12,gasto,supermercado,476.16,USD,openbank-vista,
+2026-07-12,gasto,suscripciones,86.92,USD,openbank-vista,
+2026-07-12,gasto,salidas,294.96,USD,openbank-vista,
+2026-07-12,gasto,transporte,128.41,USD,openbank-vista,
+2026-07-12,gasto,servicios,181.24,USD,openbank-vista,
+2026-07-12,gasto,salud,137.0,USD,openbank-vista,
+2026-07-15,aporte,aporte,300,USD,ontop,Aporte automático
+2026-07-20,comision,comision,16.2,USD,arq,Comisiones de operación
+2026-08-05,ingreso,sueldo,4200,USD,openbank-vista,Cobro mensual
+2026-08-12,gasto,alquiler,1165.29,USD,openbank-vista,
+2026-08-12,gasto,supermercado,506.97,USD,openbank-vista,
+2026-08-12,gasto,suscripciones,104.37,USD,openbank-vista,
+2026-08-12,gasto,salidas,333.17,USD,openbank-vista,
+2026-08-12,gasto,transporte,115.32,USD,openbank-vista,
+2026-08-12,gasto,servicios,187.85,USD,openbank-vista,
+2026-08-12,gasto,salud,144.38,USD,openbank-vista,
+2026-08-15,aporte,aporte,300,USD,ontop,Aporte automático
+2026-08-20,comision,comision,20.25,USD,arq,Comisiones de operación
+2026-06-15,aporte,aporte,400,USD,arq,Aporte manual

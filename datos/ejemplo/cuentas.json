@@ -1,0 +1,116 @@
+{
+  "_comentario": "Datos FICTICIOS.",
+  "actualizado": "2026-08-28",
+  "cuentas": [
+    {
+      "tipo": "broker",
+      "proposito": "crecimiento",
+      "liquidez_dias": 3,
+      "riesgo": 4,
+      "tasa_anual_estimada": 0.07,
+      "fuente_tasa": "ejemplo",
+      "verificado": "2026-08-28",
+      "costos": {
+        "comision_operacion_pct": 0.006,
+        "spread_estimado_pct": 0.004,
+        "mantenimiento_mensual": 0.0,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": 400,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "ejemplo",
+      "id": "arq",
+      "nombre": "ARQ App (trading USD)",
+      "moneda": "USD"
+    },
+    {
+      "tipo": "fondo",
+      "proposito": "crecimiento",
+      "liquidez_dias": 5,
+      "riesgo": 3,
+      "tasa_anual_estimada": 0.05,
+      "fuente_tasa": "ejemplo",
+      "verificado": "2026-08-28",
+      "costos": {
+        "comision_operacion_pct": 0.0,
+        "spread_estimado_pct": 0.0,
+        "mantenimiento_mensual": 0.0,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": 300,
+      "aporte_automatico": true,
+      "activa": true,
+      "notas": "ejemplo",
+      "id": "ontop",
+      "nombre": "OnTop Future Fund",
+      "moneda": "USD"
+    },
+    {
+      "tipo": "banco",
+      "proposito": "liquidez",
+      "liquidez_dias": 0,
+      "riesgo": 1,
+      "tasa_anual_estimada": 0.0,
+      "fuente_tasa": "ejemplo",
+      "verificado": "2026-08-28",
+      "costos": {
+        "comision_operacion_pct": 0.0,
+        "spread_estimado_pct": 0.0,
+        "mantenimiento_mensual": 0.0,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": 0,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "ejemplo",
+      "id": "openbank-vista",
+      "nombre": "Openbank cuenta a la vista",
+      "moneda": "USD"
+    },
+    {
+      "tipo": "banco",
+      "proposito": "emergencia",
+      "liquidez_dias": 1,
+      "riesgo": 1,
+      "tasa_anual_estimada": 0.035,
+      "fuente_tasa": "ejemplo",
+      "verificado": "2026-08-28",
+      "costos": {
+        "comision_operacion_pct": 0.0,
+        "spread_estimado_pct": 0.0,
+        "mantenimiento_mensual": 0.0,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": 0,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "ejemplo",
+      "id": "openbank-remunerada",
+      "nombre": "Openbank saldo remunerado",
+      "moneda": "USD"
+    },
+    {
+      "tipo": "banco",
+      "proposito": "liquidez",
+      "liquidez_dias": 0,
+      "riesgo": 2,
+      "tasa_anual_estimada": 0.0,
+      "fuente_tasa": "ejemplo",
+      "verificado": "2026-08-28",
+      "costos": {
+        "comision_operacion_pct": 0.0,
+        "spread_estimado_pct": 0.0,
+        "mantenimiento_mensual": 0.0,
+        "moneda_costos": "ARS"
+      },
+      "aporte_mensual_objetivo": 0,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "ejemplo",
+      "id": "pesos",
+      "nombre": "Cuenta sueldo ARS",
+      "moneda": "ARS"
+    }
+  ]
+}

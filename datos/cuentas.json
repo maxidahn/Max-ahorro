@@ -1,0 +1,72 @@
+{
+  "_comentario": "Un objeto por instrumento donde tenés (o podrías tener) plata. tasa_anual_estimada es decimal (0.04 = 4% anual). Ninguna tasa se asume: se verifica y se anota la fuente y la fecha.",
+  "actualizado": null,
+  "cuentas": [
+    {
+      "id": "arq",
+      "nombre": "ARQ App (trading USD)",
+      "tipo": "broker",
+      "moneda": "USD",
+      "proposito": "crecimiento",
+      "liquidez_dias": 3,
+      "riesgo": 4,
+      "tasa_anual_estimada": null,
+      "fuente_tasa": null,
+      "verificado": null,
+      "costos": {
+        "comision_operacion_pct": null,
+        "spread_estimado_pct": null,
+        "mantenimiento_mensual": null,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": null,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "Trading: el rendimiento es variable y no garantizado. Cargá el retorno REAL de los ultimos 12 meses, no el esperado."
+    },
+    {
+      "id": "ontop",
+      "nombre": "OnTop Future Fund",
+      "tipo": "fondo",
+      "moneda": "USD",
+      "proposito": "crecimiento",
+      "liquidez_dias": null,
+      "riesgo": 3,
+      "tasa_anual_estimada": null,
+      "fuente_tasa": null,
+      "verificado": null,
+      "costos": {
+        "comision_operacion_pct": null,
+        "spread_estimado_pct": null,
+        "mantenimiento_mensual": null,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": null,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "Verificar plazo de rescate, si hay penalidad por retiro anticipado y si el rendimiento es fijo o variable."
+    },
+    {
+      "id": "openbank",
+      "nombre": "Openbank",
+      "tipo": "banco",
+      "moneda": null,
+      "proposito": "liquidez",
+      "liquidez_dias": 0,
+      "riesgo": 1,
+      "tasa_anual_estimada": null,
+      "fuente_tasa": null,
+      "verificado": null,
+      "costos": {
+        "comision_operacion_pct": null,
+        "spread_estimado_pct": null,
+        "mantenimiento_mensual": null,
+        "moneda_costos": null
+      },
+      "aporte_mensual_objetivo": null,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "Separar saldo a la vista (tasa 0) de saldo remunerado / plazo. Si conviven, cargalos como dos cuentas: openbank-vista y openbank-remunerada."
+    }
+  ]
+}

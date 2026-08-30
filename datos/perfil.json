@@ -1,0 +1,31 @@
+{
+  "_comentario": "Completá los campos en null. Todo lo que esté en null hace que el agente pregunte en vez de suponer.",
+  "moneda_base": "USD",
+  "tipo_cambio": {
+    "USD": 1,
+    "ARS": null
+  },
+  "tipo_cambio_actualizado": null,
+  "tipo_cambio_fuente": null,
+  "ingreso_mensual": {
+    "monto": null,
+    "moneda": "USD",
+    "estabilidad": null,
+    "notas": "Si cobrás por OnTop y en pesos, cargá el total mensual promedio en moneda base."
+  },
+  "meta_tasa_ahorro": 0.3,
+  "colchon_operativo": {
+    "monto": null,
+    "moneda": "USD",
+    "notas": "Plata que sí o sí queda líquida para el mes. Todo lo que exceda esto y no rinda es dinero ocioso."
+  },
+  "fondo_emergencia_meses_objetivo": 6,
+  "perfil_riesgo": "moderado",
+  "horizonte_anios": null,
+  "deudas": [],
+  "revision": {
+    "dia_del_mes": 1,
+    "ultima": null
+  },
+  "notas": ""
+}
