@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import apalancamiento  # noqa: E402
 import cartera  # noqa: E402
 import importar  # noqa: E402
 import plan  # noqa: E402
@@ -331,6 +332,51 @@ class TestImportar(unittest.TestCase):
         self.assertEqual(
             importar.main(["posiciones", "--archivo", str(vacio), "--datos", str(self.datos)]), 1
         )
+
+
+class TestApalancamiento(unittest.TestCase):
+    def test_la_cuota_es_la_anualidad_estandar(self):
+        # 100.000 al 1% mensual a 12 meses = 8.884,88 por la fórmula de anualidad.
+        self.assertAlmostEqual(apalancamiento.cuota_de(100000, 0.01, 12), 8884.88, places=2)
+        self.assertAlmostEqual(apalancamiento.cuota_de(1200, 0, 12), 100.0)
+
+    def test_la_tasa_implicita_invierte_a_la_cuota(self):
+        cuota = apalancamiento.cuota_de(80000, 0.0243, 24)
+        self.assertAlmostEqual(apalancamiento.tasa_implicita(80000, cuota, 24), 0.0243, places=6)
+
+    def test_el_iva_encarece_la_cuota_sobre_la_tasa_nominal(self):
+        a = apalancamiento.analizar(80000, 24, 0.0243, None, iva=0.16, isr=0)
+        sin_iva = apalancamiento.cuota_de(80000, 0.0243, 24)
+        self.assertGreater(a["cuota"], sin_iva)
+        self.assertGreater(a["tasa_anual_efectiva"], (1.0243 ** 12) - 1)
+
+    def test_una_cuota_conocida_manda_sobre_la_tasa(self):
+        a = apalancamiento.analizar(80000, 24, 0.0243, 4841.29, iva=0.16, isr=0)
+        self.assertEqual(a["cuota"], 4841.29)
+        self.assertAlmostEqual(a["total_a_pagar"], 4841.29 * 24, places=2)
+
+    def test_empatar_cuesta_mas_si_las_cuotas_salen_del_ahorro(self):
+        a = apalancamiento.analizar(500000, 60, 0.0243, None, iva=0.16, isr=0)
+        self.assertLess(
+            a["empate_si_las_cuotas_salen_del_gasto"], a["empate_si_las_cuotas_salen_del_ahorro"]
+        )
+
+    def test_el_impuesto_sube_la_barrera(self):
+        a = apalancamiento.analizar(500000, 60, 0.0243, None, iva=0.16, isr=0.30)
+        self.assertAlmostEqual(
+            a["rendimiento_bruto_necesario"], a["tasa_anual_efectiva"] / 0.7, places=6
+        )
+
+    def test_los_escenarios_malos_no_cubren_la_deuda(self):
+        a = apalancamiento.analizar(500000, 60, 0.0243, None, iva=0.16, isr=0)
+        peor = a["escenarios"][0]
+        self.assertFalse(peor["cubre_la_deuda"])
+        self.assertLess(peor["neto"], -a["principal"])
+        self.assertTrue(a["escenarios"][-1]["cubre_la_deuda"])
+
+    def test_sin_tasa_ni_cuota_falla(self):
+        with self.assertRaises(ValueError):
+            apalancamiento.analizar(1000, 12, None, None, 0.16, 0)
 
 
 class TestPlantillas(unittest.TestCase):

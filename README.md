@@ -89,6 +89,7 @@ herramientas/resumen.py               patrimonio, flujo, tasa de ahorro, fondo d
 herramientas/plan.py                  oportunidades, plan mensual y proyección
 herramientas/cartera.py               composición, rebalanceo y evaluación de órdenes
 herramientas/importar.py              actualiza la cartera desde un CSV (TradingView, ARQ, planilla)
+herramientas/apalancamiento.py        costo real de endeudarse para invertir, con escenarios
 herramientas/registrar.py             carga de datos sin editar CSV a mano
 herramientas/pruebas.py               tests de las herramientas
 docs/instrumentos.md                  qué verificar de ARQ, OnTop y Openbank
