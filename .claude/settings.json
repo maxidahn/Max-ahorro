@@ -4,6 +4,7 @@
       "Bash(python3 herramientas/resumen.py:*)",
       "Bash(python3 herramientas/plan.py:*)",
       "Bash(python3 herramientas/cartera.py:*)",
+      "Bash(python3 herramientas/importar.py:*)",
       "Bash(python3 herramientas/registrar.py:*)",
       "Bash(python3 herramientas/pruebas.py:*)"
     ]

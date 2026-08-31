@@ -55,6 +55,16 @@ python3 herramientas/cartera.py aporte --monto 1000 # colocar plata nueva sin ve
 python3 herramientas/cartera.py orden --tipo compra --ticker NVDA --monto 500 --clase accion
 ```
 
+Para actualizar los valores sin editar el JSON a mano, exportá un CSV y:
+
+```bash
+python3 herramientas/importar.py posiciones --archivo ~/Downloads/cartera.csv   # simula
+python3 herramientas/importar.py posiciones --archivo ~/Downloads/cartera.csv --aplicar
+```
+
+Sobre conectar TradingView por MCP: ver `docs/tradingview.md` (resumen: no hay servidor
+oficial, y desde una sesión en la nube no se alcanza tu app de escritorio).
+
 Tus posiciones están en `datos/cartera.json` y tus reglas en `datos/objetivo.json`
 (techos por posición, piso por posición, banda de rebalanceo, orden mínima, comisión).
 Los porcentajes objetivo que vienen cargados son un punto de partida editable, no una
@@ -78,9 +88,11 @@ datos/ejemplo/                        dataset ficticio para probar
 herramientas/resumen.py               patrimonio, flujo, tasa de ahorro, fondo de emergencia
 herramientas/plan.py                  oportunidades, plan mensual y proyección
 herramientas/cartera.py               composición, rebalanceo y evaluación de órdenes
+herramientas/importar.py              actualiza la cartera desde un CSV (TradingView, ARQ, planilla)
 herramientas/registrar.py             carga de datos sin editar CSV a mano
 herramientas/pruebas.py               tests de las herramientas
 docs/instrumentos.md                  qué verificar de ARQ, OnTop y Openbank
+docs/tradingview.md                   qué se puede integrar de TradingView y qué no
 docs/metodologia.md                   la cascada de decisión y las reglas del motor
 revisiones/                           una revisión por mes
 ```

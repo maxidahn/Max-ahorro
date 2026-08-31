@@ -14,6 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import cartera  # noqa: E402
+import importar  # noqa: E402
 import plan  # noqa: E402
 import registrar  # noqa: E402
 import resumen  # noqa: E402
@@ -145,7 +146,11 @@ class TestRegistrar(unittest.TestCase):
 
     def test_registra_saldo_y_lo_toma_el_resumen(self):
         antes = resumen.calcular(self.datos, 6, HOY)["patrimonio"]
-        self.assertEqual(self.correr("saldo", "--cuenta", "ontop", "--monto", "9000"), 0)
+        # Fecha explícita: sin ella el registro usa hoy y queda fuera del corte del resumen.
+        self.assertEqual(
+            self.correr("saldo", "--cuenta", "ontop", "--monto", "9000", "--fecha", HOY.isoformat()),
+            0,
+        )
         despues = resumen.calcular(self.datos, 6, HOY)["patrimonio"]
         self.assertGreater(despues, antes)
 
@@ -168,7 +173,10 @@ class TestRegistrar(unittest.TestCase):
     def test_gasto_en_pesos_se_convierte(self):
         antes = resumen.calcular(self.datos, 6, HOY)["gasto_por_categoria"]["salidas"]
         self.assertEqual(
-            self.correr("gasto", "--categoria", "salidas", "--monto", "145.000", "--moneda", "ARS"),
+            self.correr(
+                "gasto", "--categoria", "salidas", "--monto", "145.000", "--moneda", "ARS",
+                "--fecha", HOY.isoformat(),
+            ),
             0,
         )
         despues = resumen.calcular(self.datos, 6, HOY)["gasto_por_categoria"]["salidas"]
@@ -248,6 +256,81 @@ class TestCartera(unittest.TestCase):
         a = dict(self.a, reglas=dict(self.a["reglas"], comision_por_operacion=10, orden_minima=100))
         ev = cartera.evaluar_orden(a, "compra", "SPY", 300, "nucleo")
         self.assertTrue(any("comisión" in p.lower() for p in ev["problemas"]))
+
+
+class TestImportar(unittest.TestCase):
+    def setUp(self):
+        self.tmp = Path(tempfile.mkdtemp())
+        self.datos = self.tmp / "datos"
+        self.datos.mkdir()
+        origen = RAIZ / "datos"
+        for archivo in ("cartera.json", "objetivo.json"):
+            shutil.copy(origen / archivo, self.datos / archivo)
+        self.cartera = json.loads((self.datos / "cartera.json").read_text(encoding="utf-8"))
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp, ignore_errors=True)
+
+    def test_saca_el_mercado_del_simbolo(self):
+        self.assertEqual(importar.normalizar_ticker("NASDAQ:GOOGL"), "GOOGL")
+        self.assertEqual(importar.normalizar_ticker(" spy "), "SPY")
+
+    def test_detecta_columnas_en_ingles_y_espanol(self):
+        _, mapa = importar.leer_filas("Symbol,Last\nAMEX:SPY,100\n")
+        self.assertEqual(set(mapa), {"ticker", "precio"})
+        _, mapa = importar.leer_filas("Ticker;Valor;Resultado\nSPY;100;5\n")
+        self.assertEqual(set(mapa), {"ticker", "valor", "pl"})
+
+    def test_sin_columna_de_ticker_falla(self):
+        with self.assertRaises(ErrorDatos):
+            importar.leer_filas("fecha,importe\n2026-01-01,100\n")
+
+    def test_calcula_el_delta_de_cada_posicion(self):
+        filas, mapa = importar.leer_filas("Symbol,Value\nNASDAQ:GOOGL,8000\n")
+        r = importar.calcular_cambios(self.cartera, filas, mapa, "posiciones")
+        cambio = r["cambios"][0]
+        self.assertEqual(cambio["ticker"], "GOOGL")
+        self.assertAlmostEqual(cambio["nuevo"] - cambio["anterior"], cambio["delta"], places=2)
+        self.assertNotIn("GOOGL", r["ausentes"])
+
+    def test_un_ticker_desconocido_entra_como_nuevo_sin_clasificar(self):
+        filas, mapa = importar.leer_filas("Symbol,Value\nNVDA,900\n")
+        r = importar.calcular_cambios(self.cartera, filas, mapa, "posiciones")
+        self.assertEqual([n["ticker"] for n in r["nuevos"]], ["NVDA"])
+        importar.aplicar(self.cartera, r, "2026-08-31")
+        nueva = [p for p in self.cartera["posiciones"] if p["ticker"] == "NVDA"][0]
+        self.assertEqual(nueva["clase"], "por_confirmar")
+
+    def test_precios_sin_cantidad_no_inventa_valores(self):
+        filas, mapa = importar.leer_filas("Symbol,Last\nAMEX:SPY,700\n")
+        r = importar.calcular_cambios(self.cartera, filas, mapa, "precios")
+        self.assertEqual(r["cambios"], [])
+        self.assertIn("SPY", r["sin_cantidad"])
+
+    def test_precios_con_cantidad_valua_la_posicion(self):
+        filas, mapa = importar.leer_filas("Symbol,Last,Qty\nAMEX:SPY,100,10\n")
+        r = importar.calcular_cambios(self.cartera, filas, mapa, "precios")
+        self.assertAlmostEqual(r["cambios"][0]["nuevo"], 1000.0)
+
+    def test_simular_no_escribe_y_aplicar_si(self):
+        csv_path = self.tmp / "in.csv"
+        csv_path.write_text("Symbol,Value\nAMEX:SPY,12000\n", encoding="utf-8")
+        args = ["posiciones", "--archivo", str(csv_path), "--datos", str(self.datos)]
+        self.assertEqual(importar.main(args), 0)
+        sin_tocar = json.loads((self.datos / "cartera.json").read_text(encoding="utf-8"))
+        self.assertNotEqual(sin_tocar["posiciones"][0]["valor"], 12000)
+        self.assertEqual(importar.main(args + ["--aplicar", "--hoy", "2026-08-31"]), 0)
+        escrito = json.loads((self.datos / "cartera.json").read_text(encoding="utf-8"))
+        spy = [p for p in escrito["posiciones"] if p["ticker"] == "SPY"][0]
+        self.assertEqual(spy["valor"], 12000)
+        self.assertEqual(escrito["actualizado"], "2026-08-31")
+
+    def test_un_archivo_vacio_falla_sin_romper(self):
+        vacio = self.tmp / "vacio.csv"
+        vacio.write_text("", encoding="utf-8")
+        self.assertEqual(
+            importar.main(["posiciones", "--archivo", str(vacio), "--datos", str(self.datos)]), 1
+        )
 
 
 class TestPlantillas(unittest.TestCase):
