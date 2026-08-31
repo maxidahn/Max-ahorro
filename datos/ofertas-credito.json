@@ -1,0 +1,41 @@
+{
+  "_comentario": "Ofertas de crédito recibidas. NO son deudas tomadas: se guardan para poder compararlas contra la próxima y para no volver a calcular lo mismo. Las deudas vigentes van en perfil.json > deudas.",
+  "ofertas": [
+    {
+      "id": "bbva-personal-2026-08",
+      "banco": "BBVA México",
+      "producto": "Préstamo Personal Inmediato",
+      "fecha_oferta": "2026-08-31",
+      "vigencia": "sólo el día de la oferta",
+      "moneda": "MXN",
+      "tasa_anual_fija": 0.2925,
+      "tasa_mensual_fija": 0.0243,
+      "comision_contratacion": 0.0,
+      "cat_sin_iva": 0.347,
+      "corrida_mostrada": {
+        "monto": 80000,
+        "meses": 24,
+        "cuota_con_iva": 4841.29,
+        "total_a_pagar": 116190.96,
+        "costo_sobre_capital": 0.452,
+        "tasa_efectiva_anual_del_flujo": 0.464
+      },
+      "maximo_ofrecido": {
+        "monto": 500000,
+        "meses": 60,
+        "cuota_estimada": 18963.56,
+        "total_estimado": 1137813.31,
+        "costo_sobre_capital": 1.28,
+        "nota": "Estimado con la tasa efectiva implícita en la corrida de 80k. Pedir la corrida real."
+      },
+      "a_verificar": [
+        "La cuota de 4.841,29 es ~226 MXN/mes mayor que la que sale de 2,43% + IVA sobre 80.000 a 24 meses (4.615,34). Pedir el desglose y el monto total a pagar por escrito.",
+        "La tasa preferencial exige comprobar uso en 'productos sostenibles' dentro de 20 días naturales; mientras tanto corre la tasa convencional y esos pagos no son reembolsables.",
+        "Revisar si el contrato restringe el destino de los fondos.",
+        "El IVA del interés puede variar en cada pago."
+      ],
+      "analisis": "python3 herramientas/apalancamiento.py --monto 80000 --meses 24 --cuota 4841.29 --isr 0.30",
+      "estado": "no tomada"
+    }
+  ]
+}
