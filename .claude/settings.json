@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Bash(python3 herramientas/apalancamiento.py:*)",
+      "Bash(python3 herramientas/cambio.py:*)",
       "Bash(python3 herramientas/resumen.py:*)",
       "Bash(python3 herramientas/plan.py:*)",
       "Bash(python3 herramientas/cartera.py:*)",

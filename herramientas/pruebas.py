@@ -14,6 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import apalancamiento  # noqa: E402
+import cambio  # noqa: E402
 import cartera  # noqa: E402
 import importar  # noqa: E402
 import plan  # noqa: E402
@@ -377,6 +378,54 @@ class TestApalancamiento(unittest.TestCase):
     def test_sin_tasa_ni_cuota_falla(self):
         with self.assertRaises(ValueError):
             apalancamiento.analizar(1000, 12, None, None, 0.16, 0)
+
+
+class TestCambio(unittest.TestCase):
+    def analizar(self, **kw):
+        base = dict(
+            sueldo=1600, tasa_hoy=17.0427, tasa_ref=18.50, prestamo=None, cuota=None,
+            meses=None, moneda_local="MXN", moneda_sueldo="USD",
+        )
+        base.update(kw)
+        return cambio.analizar(**base)
+
+    def test_convierte_el_sueldo_a_moneda_local(self):
+        r = self.analizar()
+        self.assertAlmostEqual(r["pesos_por_mes_hoy"], 1600 * 17.0427, places=2)
+
+    def test_la_diferencia_contra_la_referencia(self):
+        ref = self.analizar()["referencia"]
+        self.assertAlmostEqual(ref["diferencia_mensual"], 1600 * (18.50 - 17.0427), places=2)
+        self.assertAlmostEqual(ref["diferencia_anual"], ref["diferencia_mensual"] * 12, places=2)
+
+    def test_sin_referencia_no_inventa_comparacion(self):
+        self.assertNotIn("referencia", self.analizar(tasa_ref=None))
+
+    def test_el_empate_iguala_lo_devuelto_con_lo_no_vendido(self):
+        p = self.analizar(prestamo=80000, cuota=4841.29, meses=24)["prestamo"]
+        self.assertAlmostEqual(
+            p["dolares_que_no_vendes_hoy"] * p["tipo_de_cambio_de_empate"],
+            p["total_a_pagar"],
+            places=2,
+        )
+        self.assertGreater(p["tipo_de_cambio_de_empate"], 17.0427)
+
+    def test_volver_a_la_referencia_no_alcanza_a_cubrir_el_prestamo(self):
+        p = self.analizar(prestamo=80000, cuota=4841.29, meses=24)["prestamo"]
+        self.assertLess(p["si_vuelve_a_la_referencia"]["resultado"], 0)
+
+    def test_el_costo_del_prestamo_supera_la_diferencia_evitada(self):
+        p = self.analizar(prestamo=80000, cuota=4841.29, meses=24)["prestamo"]
+        self.assertLess(p["neto_contra_la_diferencia"], 0)
+        self.assertAlmostEqual(
+            p["neto_contra_la_diferencia"],
+            p["diferencia_de_cambio_evitada"] - p["costo"],
+            places=2,
+        )
+
+    def test_cuantos_meses_de_sueldo_reemplaza(self):
+        p = self.analizar(prestamo=80000, cuota=4841.29, meses=24)["prestamo"]
+        self.assertAlmostEqual(p["meses_de_sueldo_que_reemplaza"], 80000 / (1600 * 17.0427), 4)
 
 
 class TestPlantillas(unittest.TestCase):
