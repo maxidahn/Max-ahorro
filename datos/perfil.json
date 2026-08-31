@@ -3,15 +3,15 @@
   "moneda_base": "USD",
   "tipo_cambio": {
     "USD": 1,
-    "ARS": null
+    "MXN": 17.0427
   },
-  "tipo_cambio_actualizado": null,
-  "tipo_cambio_fuente": null,
+  "tipo_cambio_actualizado": "2026-08-31",
+  "tipo_cambio_fuente": "DOF (tipo de cambio FIX de Banxico), 31-08-2026",
   "ingreso_mensual": {
-    "monto": null,
+    "monto": 6600,
     "moneda": "USD",
     "estabilidad": null,
-    "notas": "Si cobrás por OnTop y en pesos, cargá el total mensual promedio en moneda base."
+    "notas": "Cobra en USD y gasta en MXN. A 17.0427 son 112.482 MXN por mes. Hoy convierte el 100%: falta el gasto real en pesos para saber cuánto de eso hace falta convertir de verdad."
   },
   "meta_tasa_ahorro": 0.3,
   "colchon_operativo": {
@@ -27,5 +27,10 @@
     "dia_del_mes": 1,
     "ultima": null
   },
-  "notas": ""
+  "notas": "Vive en México, cobra en USD. Deuda de tarjetas pendiente de cargar en 'deudas'.",
+  "gasto_mensual_pesos": {
+    "monto": null,
+    "moneda": "MXN",
+    "notas": "Dato clave: todo lo que gaste por debajo de su ingreso puede quedarse en USD sin costo y sin deuda."
+  }
 }
