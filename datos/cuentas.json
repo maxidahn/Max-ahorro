@@ -54,9 +54,9 @@
       "proposito": "emergencia",
       "liquidez_dias": 0,
       "riesgo": 1,
-      "tasa_anual_estimada": null,
-      "fuente_tasa": null,
-      "verificado": null,
+      "tasa_anual_estimada": 0.0844,
+      "fuente_tasa": "Estado de cuenta Openbank, período 01/07/26-31/07/26: GAT nominal antes de impuestos 8,44%",
+      "verificado": "2026-09-01",
       "costos": {
         "comision_operacion_pct": null,
         "spread_estimado_pct": null,
@@ -66,7 +66,8 @@
       "aporte_mensual_objetivo": null,
       "aporte_automatico": false,
       "activa": true,
-      "notas": "Saldo 241.660,94 MXN. El movimiento del 28-08-2026 muestra 51,98 de abono de intereses y 0,68 de ISR retenido. Si ese abono es DIARIO la tasa ronda 7,9% anual; si es MENSUAL, 0,26%. Son mundos distintos: abrí 'Detalle de tu rendimiento' en la app y cargá la tasa real."
+      "notas": "Apartado Open, en pesos. Intereses de julio: 1.782,92 MXN sobre un saldo promedio de 255.239,90 en 31 días = 8,22% anual, consistente con el GAT nominal de 8,44%. GAT real (después de inflación estimada): 4,32%. Los intereses se abonan a diario, con ISR retenido también diario. La Cuenta Débito Open Light asociada paga 0% y queda en cero: el barrido al Apartado ya está bien hecho. OJO: el estado de cuenta muestra una 'tasa bruta anual ponderada' que no cuadra con los intereses efectivamente pagados (al 18,10% habrían sido 3.923 y no 1.782,92). Lo que cobrás es el 8,2-8,44%; si te interesa, preguntá en el banco a qué corresponde ese otro número.",
+      "tasa_real_gat": 0.0432
     },
     {
       "id": "bybit",

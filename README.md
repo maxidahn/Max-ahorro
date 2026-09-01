@@ -123,6 +123,10 @@ Las tasas se cargan en decimal: `0.035` = 3,5% anual.
 `datos/` guarda tus números reales. **Mantené el repositorio privado.** Si alguna vez lo
 hacés público, sacá `datos/` primero.
 
+Y algo más específico: **no guardes acá los estados de cuenta en PDF**. Traen CLABE, número
+de cuenta, RFC y domicilio, y ninguno de esos datos hace falta para calcular nada. De un
+estado de cuenta se extrae la tasa, el saldo y la fuente; el archivo se queda afuera.
+
 ## Aviso
 
 Herramienta personal de cálculo y organización. No es asesoramiento financiero ni
