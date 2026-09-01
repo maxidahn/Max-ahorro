@@ -29,8 +29,13 @@
   },
   "notas": "Vive en México, cobra en USD. Deuda de tarjetas pendiente de cargar en 'deudas'.",
   "gasto_mensual_pesos": {
-    "monto": null,
+    "monto": 95439,
     "moneda": "MXN",
-    "notas": "Dato clave: todo lo que gaste por debajo de su ingreso puede quedarse en USD sin costo y sin deuda."
+    "notas": "Estimado: ingreso 6.600 USD menos 1.000 USD de ahorro = 5.600 USD a 17,0427. Confirmar con gastos reales cargados en movimientos.csv."
+  },
+  "capacidad_de_ahorro": {
+    "actual_usd": 1000,
+    "desde_diciembre_usd": 2000,
+    "notas": "Período ajustado hasta diciembre de 2026 por cuentas grandes pendientes. 1.000 USD sobre 6.600 = 15,2% de tasa de ahorro; 2.000 = 30,3%, que cumple la meta."
   }
 }

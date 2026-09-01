@@ -13,6 +13,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+import anticipar  # noqa: E402
 import apalancamiento  # noqa: E402
 import cambio  # noqa: E402
 import cartera  # noqa: E402
@@ -426,6 +427,51 @@ class TestCambio(unittest.TestCase):
     def test_cuantos_meses_de_sueldo_reemplaza(self):
         p = self.analizar(prestamo=80000, cuota=4841.29, meses=24)["prestamo"]
         self.assertAlmostEqual(p["meses_de_sueldo_que_reemplaza"], 80000 / (1600 * 17.0427), 4)
+
+
+class TestAnticipar(unittest.TestCase):
+    def plan(self):
+        return anticipar.aportes(1000, 2000, 4, 24)
+
+    def test_el_plan_de_aportes_cambia_en_el_mes_indicado(self):
+        plan = self.plan()
+        self.assertEqual(plan[:4], [1000] * 4)
+        self.assertEqual(plan[4], 2000)
+        self.assertEqual(len(plan), 24)
+
+    def test_sin_aporte_futuro_el_plan_es_plano(self):
+        self.assertEqual(anticipar.aportes(500, None, 0, 3), [500, 500, 500])
+
+    def test_sin_rendimiento_el_futuro_es_la_suma(self):
+        self.assertAlmostEqual(anticipar.futuro(100, [50, 50], 0.0), 200.0, places=6)
+
+    def test_con_rendimiento_compone(self):
+        self.assertGreater(anticipar.futuro(1000, [0] * 12, 0.10), 1099)
+
+    def test_la_deuda_deja_menos_capital_aportado(self):
+        r = anticipar.comparar(9388, 639, 24, self.plan(), 0.0)
+        # Sin rendimiento, la diferencia es exactamente el interés pagado.
+        self.assertLess(r["con_deuda"], r["sin_deuda"])
+
+    def test_con_rendimiento_alto_adelantar_gana(self):
+        r = anticipar.comparar(9388, 639, 24, self.plan(), 2.0)
+        self.assertGreater(r["diferencia"], 0)
+
+    def test_avisa_cuando_la_cuota_supera_la_capacidad(self):
+        plan = anticipar.aportes(400, None, 0, 12)
+        r = anticipar.comparar(9388, 639, 12, plan, 0.0)
+        self.assertEqual(r["meses_en_rojo"], 12)
+
+    def test_el_empate_deja_los_dos_caminos_iguales(self):
+        r = anticipar.empate(9388, 639, 24, self.plan())
+        self.assertIsNotNone(r)
+        self.assertAlmostEqual(
+            anticipar.comparar(9388, 639, 24, self.plan(), r)["diferencia"], 0, places=2
+        )
+
+    def test_el_empate_supera_a_la_tasa_del_prestamo(self):
+        # La cuota recorta el aporte mensual, así que la barrera es más alta que la tasa.
+        self.assertGreater(anticipar.empate(9388, 639, 24, self.plan()), 0.46)
 
 
 class TestPlantillas(unittest.TestCase):
