@@ -14,6 +14,8 @@ import json
 import sys
 from pathlib import Path
 
+from datetime import date
+
 from comun import Cambio, ErrorDatos, dir_datos, leer_json, money, pct, subtitulo, titulo
 
 
@@ -25,15 +27,12 @@ def analizar(datos: Path) -> dict:
     archivo = datos / "patrimonio.json"
     extra = json.loads(archivo.read_text(encoding="utf-8")) if archivo.exists() else {}
 
-    cartera_file = datos / "cartera.json"
-    invertible = 0.0
-    if cartera_file.exists():
-        cartera = json.loads(cartera_file.read_text(encoding="utf-8"))
-        invertible = cambio.a_base(
-            sum(float(p["valor"]) for p in cartera.get("posiciones", []))
-            + float(cartera.get("efectivo") or 0),
-            cartera.get("moneda", base),
-        )
+    # El capital invertible sale de TODAS las cuentas, no sólo del broker.
+    import resumen as mod_resumen
+
+    foto = mod_resumen.calcular(datos, 6, date.today())
+    invertible = foto["patrimonio"]
+    liquido = foto["liquido_bajo_riesgo"]
 
     uso = [
         {
@@ -75,6 +74,7 @@ def analizar(datos: Path) -> dict:
     return {
         "moneda_base": base,
         "capital_invertible": invertible,
+        "liquido_bajo_riesgo": liquido,
         "activos_de_uso": uso,
         "total_activos_de_uso": total_uso,
         "por_cobrar": cobrar,
@@ -84,6 +84,7 @@ def analizar(datos: Path) -> dict:
         "patrimonio_neto": neto,
         "gasto_mensual": gasto_base,
         "meses_de_gasto_en_capital": invertible / gasto_base if gasto_base else None,
+        "meses_de_gasto_liquidos": liquido / gasto_base if gasto_base else None,
         "faltan": extra.get("faltan", []),
     }
 
@@ -116,8 +117,15 @@ def imprimir(r: dict) -> None:
         print(subtitulo("Lo que esto significa para tu colchón"))
         print(f"  Gasto mensual: {money(r['gasto_mensual'], b)}")
         print(
-            f"  Tu capital invertible equivale a {r['meses_de_gasto_en_capital']:.1f} meses de gasto, "
-            "pero está\n  a precio de mercado: si necesitás venderlo en un mal mes, vendés perdiendo."
+            f"  Capital invertible: {r['meses_de_gasto_en_capital']:.1f} meses de gasto."
+        )
+        print(
+            f"  De eso, líquido y de bajo riesgo (disponible en menos de una semana): "
+            f"{money(r['liquido_bajo_riesgo'], b)} = {r['meses_de_gasto_liquidos']:.1f} meses."
+        )
+        print(
+            "  El resto está a precio de mercado o con plazo: si necesitás venderlo en un mal mes,\n"
+            "  vendés perdiendo, y lo que tiene plazo no está el día que lo pedís."
         )
         print("  Los bienes de uso y lo por cobrar no cubren una emergencia: no se venden por partes\n"
               "  ni entran cuando los necesitás.")

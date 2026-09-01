@@ -23,8 +23,9 @@
     }
   ],
   "faltan": [
-    "Saldos de OnTop Future Fund y Openbank",
+    "Tasa real del Apartado Open de Openbank (el abono de 51,98 puede ser diario o mensual)",
     "Rendimiento real de los últimos 12 meses de ARQ",
-    "Las posiciones que no entraban en la captura de la cartera (1.286,81 USD)"
+    "Las posiciones que no entraban en la captura de la cartera (1.286,81 USD)",
+    "Qué respalda el OnTop Future Fund y si hay seguro de depósito"
   ]
 }

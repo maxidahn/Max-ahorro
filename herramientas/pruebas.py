@@ -517,7 +517,7 @@ class TestPatrimonio(unittest.TestCase):
     def test_sin_archivo_de_patrimonio_no_falla(self):
         tmp = Path(tempfile.mkdtemp())
         try:
-            for archivo in ("perfil.json", "cartera.json"):
+            for archivo in ("perfil.json", "cartera.json", "cuentas.json", "saldos.csv"):
                 shutil.copy(RAIZ / "datos" / archivo, tmp / archivo)
             r = patrimonio.analizar(tmp)
             self.assertEqual(r["total_activos_de_uso"], 0)
@@ -532,10 +532,17 @@ class TestPlantillas(unittest.TestCase):
         for archivo in ("perfil.json", "cuentas.json", "metas.json"):
             json.loads((base / archivo).read_text(encoding="utf-8"))
 
-    def test_la_plantilla_pide_los_datos_que_faltan(self):
-        cuentas = cuentas_por_id(leer_json("cuentas", EJEMPLO.parent))
-        self.assertEqual({"arq", "ontop", "openbank"}, set(cuentas))
-        self.assertTrue(all(c["tasa_anual_estimada"] is None for c in cuentas.values()))
+    def test_toda_tasa_cargada_tiene_fuente_y_fecha(self):
+        # Regla del proyecto: una tasa sin fuente verificada no se usa para recomendar.
+        for cta in cuentas_por_id(leer_json("cuentas", EJEMPLO.parent)).values():
+            if cta.get("tasa_anual_estimada") is not None:
+                self.assertTrue(cta.get("fuente_tasa"), f"{cta['id']} tiene tasa sin fuente")
+                self.assertTrue(cta.get("verificado"), f"{cta['id']} tiene tasa sin fecha")
+
+    def test_toda_cuenta_declara_nombre_y_moneda(self):
+        for cta in cuentas_por_id(leer_json("cuentas", EJEMPLO.parent)).values():
+            self.assertTrue(cta.get("nombre"))
+            self.assertTrue(cta.get("moneda"))
 
 
 if __name__ == "__main__":

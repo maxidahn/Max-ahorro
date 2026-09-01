@@ -1,6 +1,6 @@
 {
   "_comentario": "Un objeto por instrumento donde tenés (o podrías tener) plata. tasa_anual_estimada es decimal (0.04 = 4% anual). Ninguna tasa se asume: se verifica y se anota la fuente y la fecha.",
-  "actualizado": "2026-08-30",
+  "actualizado": "2026-09-01",
   "cuentas": [
     {
       "id": "arq",
@@ -26,15 +26,15 @@
     },
     {
       "id": "ontop",
-      "nombre": "OnTop Future Fund",
+      "nombre": "OnTop Future Fund +30",
       "tipo": "fondo",
       "moneda": "USD",
-      "proposito": "crecimiento",
-      "liquidez_dias": null,
-      "riesgo": 3,
-      "tasa_anual_estimada": null,
-      "fuente_tasa": null,
-      "verificado": null,
+      "proposito": "emergencia",
+      "liquidez_dias": 30,
+      "riesgo": 2,
+      "tasa_anual_estimada": 0.04,
+      "fuente_tasa": "app OnTop: Future Fund +30, 4.0% APR",
+      "verificado": "2026-09-01",
       "costos": {
         "comision_operacion_pct": null,
         "spread_estimado_pct": null,
@@ -44,14 +44,14 @@
       "aporte_mensual_objetivo": null,
       "aporte_automatico": false,
       "activa": true,
-      "notas": "Verificar plazo de rescate, si hay penalidad por retiro anticipado y si el rendimiento es fijo o variable."
+      "notas": "32.000 USD en el tramo +30 (4,0% APR, bloqueado 30 días); 0,70 en Flex (3,0%). El tramo +90 paga 5,0% y los Locks hasta 5,25%: si esa plata no se toca en 90 días, hay 1 punto anual sin usar. Acumulado ganado según la app: 472,55 USD (verificar desde qué fecha). A VERIFICAR: qué respalda el fondo, si hay seguro de depósito y qué pasa si necesitás el dinero antes de los 30 días."
     },
     {
       "id": "openbank",
-      "nombre": "Openbank",
+      "nombre": "Openbank — Apartado Open",
       "tipo": "banco",
-      "moneda": null,
-      "proposito": "liquidez",
+      "moneda": "MXN",
+      "proposito": "emergencia",
       "liquidez_dias": 0,
       "riesgo": 1,
       "tasa_anual_estimada": null,
@@ -66,7 +66,29 @@
       "aporte_mensual_objetivo": null,
       "aporte_automatico": false,
       "activa": true,
-      "notas": "Separar saldo a la vista (tasa 0) de saldo remunerado / plazo. Si conviven, cargalos como dos cuentas: openbank-vista y openbank-remunerada."
+      "notas": "Saldo 241.660,94 MXN. El movimiento del 28-08-2026 muestra 51,98 de abono de intereses y 0,68 de ISR retenido. Si ese abono es DIARIO la tasa ronda 7,9% anual; si es MENSUAL, 0,26%. Son mundos distintos: abrí 'Detalle de tu rendimiento' en la app y cargá la tasa real."
+    },
+    {
+      "id": "cripto",
+      "nombre": "Exchange cripto (BTC)",
+      "tipo": "broker",
+      "moneda": "USD",
+      "proposito": "crecimiento",
+      "liquidez_dias": 2,
+      "riesgo": 5,
+      "tasa_anual_estimada": null,
+      "fuente_tasa": null,
+      "verificado": null,
+      "costos": {
+        "comision_operacion_pct": null,
+        "spread_estimado_pct": null,
+        "mantenimiento_mensual": null,
+        "moneda_costos": "USD"
+      },
+      "aporte_mensual_objetivo": null,
+      "aporte_automatico": false,
+      "activa": true,
+      "notas": "0,00682435 BTC = 535,62 USD más 0,40 de saldo. Riesgo 5: volatilidad alta y custodia en el exchange. Verificar comisiones de compra y de retiro."
     }
   ]
 }
