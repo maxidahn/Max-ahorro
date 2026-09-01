@@ -10,9 +10,9 @@
       "proposito": "crecimiento",
       "liquidez_dias": 3,
       "riesgo": 4,
-      "tasa_anual_estimada": null,
-      "fuente_tasa": null,
-      "verificado": null,
+      "tasa_anual_estimada": 0.08,
+      "fuente_tasa": "Rendimiento informado por la app ARQ: +8% a 12 meses, +10% a 6 meses (2026-09-01)",
+      "verificado": "2026-09-01",
       "costos": {
         "comision_operacion_pct": null,
         "spread_estimado_pct": null,
@@ -22,7 +22,7 @@
       "aporte_mensual_objetivo": null,
       "aporte_automatico": false,
       "activa": true,
-      "notas": "Detalle de posiciones en datos/cartera.json. Resultado acumulado declarado por la app: +997,42 USD sobre un costo estimado de 25.406,84 = +3,93%, sin período conocido, así que NO es anualizable ni comparable contra una tasa hasta saber desde cuándo. El +6.207,55 de 6 meses que muestra la app incluye depósitos: no es rendimiento."
+      "notas": "Rendimiento informado: +8% a 12 meses y +10% a 6 meses. Como el semestre da más que el año, el semestre anterior fue negativo (aprox. -1,8%). Este mes la cartera bajó. NO es una tasa: es un resultado pasado de una cartera de acciones, puede ser negativo el año que viene y no sirve para proyectar. A VERIFICAR en la app si ese % es rendimiento real (ponderado por tiempo) o simple variación del saldo, que incluiría los depósitos. Detalle de posiciones en cartera.json."
     },
     {
       "id": "ontop",
