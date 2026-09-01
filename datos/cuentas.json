@@ -69,8 +69,8 @@
       "notas": "Saldo 241.660,94 MXN. El movimiento del 28-08-2026 muestra 51,98 de abono de intereses y 0,68 de ISR retenido. Si ese abono es DIARIO la tasa ronda 7,9% anual; si es MENSUAL, 0,26%. Son mundos distintos: abrí 'Detalle de tu rendimiento' en la app y cargá la tasa real."
     },
     {
-      "id": "cripto",
-      "nombre": "Exchange cripto (BTC)",
+      "id": "bybit",
+      "nombre": "Bybit (BTC)",
       "tipo": "broker",
       "moneda": "USD",
       "proposito": "crecimiento",
@@ -88,7 +88,8 @@
       "aporte_mensual_objetivo": null,
       "aporte_automatico": false,
       "activa": true,
-      "notas": "0,00682435 BTC = 535,62 USD más 0,40 de saldo. Riesgo 5: volatilidad alta y custodia en el exchange. Verificar comisiones de compra y de retiro."
+      "notas": "0,00682435 BTC = 535,62 USD. Custodia en el exchange: las monedas están a nombre de Bybit, no tuyo, y sin las llaves no son técnicamente tuyas. Bybit sufrió un hackeo en febrero de 2025 por ~1.400 millones de USD en ETH y cubrió a los usuarios con fondos propios; el episodio no dice nada sobre el futuro, pero sí sobre la categoría de riesgo. A este tamaño (0,7% del capital) es irrelevante; si el objetivo de cripto sube, la custodia pasa a ser una decisión propia. A VERIFICAR: comisión de compra, comisión y tiempo de retiro, y si el retiro a México tiene límites.",
+      "custodia": "exchange"
     }
   ]
 }

@@ -56,6 +56,22 @@ Mezclarlos esconde justo el problema que buscás: cuánta plata está quieta al 
 A verificar: tasa vigente y si es promocional o permanente, tope de saldo remunerado,
 si la remuneración es diaria o mensual, y costo de mantenimiento de la cuenta.
 
+## Cripto: dos formas distintas de tener lo mismo
+
+Hoy hay exposición a bitcoin por dos vías, y no son intercambiables:
+
+| | Bybit (BTC directo) | IBIT dentro de ARQ (ETF) |
+|---|---|---|
+| Custodia | Del exchange, salvo que retires a una wallet propia | Del emisor del ETF; vos tenés un título |
+| Riesgo de contraparte | El exchange | El bróker y el emisor |
+| Horario | 24/7 | Horario de mercado |
+| Se puede autocustodiar | Sí, retirando a wallet propia | No |
+
+A escala chica da lo mismo. Cuando la posición crece, la pregunta "¿quién tiene las llaves?"
+deja de ser teórica: en un exchange, tus monedas son un saldo en la contabilidad de esa
+empresa. La regla práctica: lo que no estarías dispuesto a perder si el exchange
+desaparece, no vive en el exchange.
+
 ## Opciones a comparar (no recomendaciones)
 
 Si el diagnóstico muestra plata ociosa, estas son las familias de instrumentos que suele
