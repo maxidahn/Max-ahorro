@@ -53,6 +53,8 @@ def calcular(datos_dir, n_meses: int, hoy: date) -> dict:
         pendientes.append("No hay movimientos cargados (datos/movimientos.csv).")
     if (perfil.get("ingreso_mensual") or {}).get("monto") is None:
         pendientes.append("Falta ingreso_mensual.monto en perfil.json.")
+    if not movimientos and (perfil.get("gasto_mensual") or {}).get("monto") is None:
+        pendientes.append("Falta gasto_mensual.monto en perfil.json.")
     if (perfil.get("colchon_operativo") or {}).get("monto") is None:
         pendientes.append(
             "Falta colchon_operativo.monto en perfil.json: sin eso no se sabe cuánta plata "
@@ -90,8 +92,7 @@ def calcular(datos_dir, n_meses: int, hoy: date) -> dict:
         )
         if cid not in cuentas:
             pendientes.append(f"El saldo de '{cid}' no tiene cuenta declarada en cuentas.json.")
-        elif tasa is None:
-            pendientes.append(f"Falta tasa_anual_estimada de '{cid}' en cuentas.json.")
+        # Si falta la tasa, ya lo reporta el recorrido de cuentas de más arriba.
 
     posiciones.sort(key=lambda p: p["monto_base"], reverse=True)
     patrimonio = sum(p["monto_base"] for p in posiciones)
@@ -139,6 +140,12 @@ def calcular(datos_dir, n_meses: int, hoy: date) -> dict:
                 float(declarado), (perfil.get("ingreso_mensual") or {}).get("moneda", base)
             )
     gasto_prom = promedio(gastos)
+    if not gasto_prom:
+        declarado = (perfil.get("gasto_mensual") or {}).get("monto")
+        if declarado:
+            gasto_prom = cambio.a_base(
+                float(declarado), (perfil.get("gasto_mensual") or {}).get("moneda", base)
+            )
     aporte_prom = promedio(aportes)
     excedente = ingreso_prom - gasto_prom
     tasa_ahorro = excedente / ingreso_prom if ingreso_prom else 0.0

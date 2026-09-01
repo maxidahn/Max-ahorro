@@ -15,9 +15,9 @@
   },
   "meta_tasa_ahorro": 0.3,
   "colchon_operativo": {
-    "monto": null,
+    "monto": 5600,
     "moneda": "USD",
-    "notas": "Plata que sí o sí queda líquida para el mes. Todo lo que exceda esto y no rinda es dinero ocioso."
+    "notas": "Un mes de gastos, líquido. No se invierte."
   },
   "fondo_emergencia_meses_objetivo": 6,
   "perfil_riesgo": "moderado",
@@ -27,15 +27,19 @@
     "dia_del_mes": 1,
     "ultima": null
   },
-  "notas": "Vive en México, cobra en USD. Deuda de tarjetas pendiente de cargar en 'deudas'.",
-  "gasto_mensual_pesos": {
-    "monto": 95439,
-    "moneda": "MXN",
-    "notas": "Estimado: ingreso 6.600 USD menos 1.000 USD de ahorro = 5.600 USD a 17,0427. Confirmar con gastos reales cargados en movimientos.csv."
-  },
+  "notas": "Vive en México, cobra en USD. NO financia tarjetas: paga el saldo total todos los meses, así que no hay deuda cara que refinanciar.",
   "capacidad_de_ahorro": {
     "actual_usd": 1000,
     "desde_diciembre_usd": 2000,
-    "notas": "Período ajustado hasta diciembre de 2026 por cuentas grandes pendientes. 1.000 USD sobre 6.600 = 15,2% de tasa de ahorro; 2.000 = 30,3%, que cumple la meta."
+    "notas": "Período ajustado hasta diciembre de 2026 por cuentas grandes pendientes. 1.000 USD sobre 6.600 = 15,2% de tasa de ahorro; 2.000 = 30,3%, que cumple la meta.",
+    "rango_usd": [
+      1000,
+      2500
+    ]
+  },
+  "gasto_mensual": {
+    "monto": 5600,
+    "moneda": "USD",
+    "notas": "Ingreso 6.600 menos 1.000 de ahorro = 95.439 MXN al cambio de hoy. Reemplazar por el gasto real cuando haya movimientos cargados."
   }
 }
