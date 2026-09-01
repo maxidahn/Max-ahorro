@@ -1,0 +1,30 @@
+{
+  "_comentario": "Lo que NO es capital invertible: bienes de uso y cuentas por cobrar. Se separan a propósito, porque no sirven para invertir ni para cubrir una emergencia, pero sí forman parte del patrimonio.",
+  "actualizado": "2026-08-31",
+  "activos_de_uso": [
+    {
+      "id": "camioneta",
+      "nombre": "Ford Escape 2023 híbrida",
+      "valor": 460000,
+      "moneda": "MXN",
+      "fuente_valor": "estimación de Max, 2026-08-31",
+      "notas": "Bien de uso, no inversión: se deprecia con los años y los kilómetros, no genera renta y no se puede vender por partes. No cuenta como colchón de emergencia."
+    }
+  ],
+  "por_cobrar": [
+    {
+      "id": "prestamos-personales",
+      "nombre": "Dinero que le deben a Max",
+      "valor_nominal": 75000,
+      "incobrable_estimado": 25000,
+      "moneda": "MXN",
+      "vencimiento": null,
+      "notas": "Se valúa por lo recuperable (50.000), no por lo nominal. Sin fecha de cobro comprometida, no se puede contar para ningún plan con fecha."
+    }
+  ],
+  "faltan": [
+    "Saldos de OnTop Future Fund y Openbank",
+    "Rendimiento real de los últimos 12 meses de ARQ",
+    "Las posiciones que no entraban en la captura de la cartera (1.286,81 USD)"
+  ]
+}

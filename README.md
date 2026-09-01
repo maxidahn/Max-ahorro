@@ -82,6 +82,7 @@ datos/metas.json                      metas con monto y fecha
 datos/cartera.json                    posiciones de la cuenta de inversión
 datos/objetivo.json                   tu política: asignación objetivo y reglas de operación
 datos/operaciones.csv                 registro de compras y ventas, con el motivo de cada una
+datos/patrimonio.json                 bienes de uso y cuentas por cobrar (no son capital invertible)
 datos/saldos.csv                      fotos de saldo por cuenta y fecha
 datos/movimientos.csv                 ingresos, gastos, aportes, comisiones
 datos/ejemplo/                        dataset ficticio para probar
@@ -92,6 +93,7 @@ herramientas/importar.py              actualiza la cartera desde un CSV (Trading
 herramientas/apalancamiento.py        costo real de endeudarse para invertir, con escenarios
 herramientas/cambio.py                cobrar en una moneda y gastar en otra: convertir vs endeudarse
 herramientas/anticipar.py             endeudarse para invertir hoy vs aportar mes a mes
+herramientas/patrimonio.py            patrimonio completo: capital, bienes de uso y por cobrar
 herramientas/registrar.py             carga de datos sin editar CSV a mano
 herramientas/pruebas.py               tests de las herramientas
 docs/instrumentos.md                  qué verificar de ARQ, OnTop y Openbank

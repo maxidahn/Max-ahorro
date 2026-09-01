@@ -9,7 +9,8 @@
       "Bash(python3 herramientas/cartera.py:*)",
       "Bash(python3 herramientas/importar.py:*)",
       "Bash(python3 herramientas/registrar.py:*)",
-      "Bash(python3 herramientas/pruebas.py:*)"
+      "Bash(python3 herramientas/pruebas.py:*)",
+      "Bash(python3 herramientas/patrimonio.py:*)"
     ]
   }
 }

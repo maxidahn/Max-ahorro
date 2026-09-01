@@ -16,6 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import anticipar  # noqa: E402
 import apalancamiento  # noqa: E402
 import cambio  # noqa: E402
+import patrimonio  # noqa: E402
 import cartera  # noqa: E402
 import importar  # noqa: E402
 import plan  # noqa: E402
@@ -472,6 +473,57 @@ class TestAnticipar(unittest.TestCase):
     def test_el_empate_supera_a_la_tasa_del_prestamo(self):
         # La cuota recorta el aporte mensual, así que la barrera es más alta que la tasa.
         self.assertGreater(anticipar.empate(9388, 639, 24, self.plan()), 0.46)
+
+
+class TestPatrimonio(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.r = patrimonio.analizar(RAIZ / "datos")
+
+    def test_el_neto_suma_las_tres_partes(self):
+        self.assertAlmostEqual(
+            self.r["patrimonio_neto"],
+            self.r["capital_invertible"]
+            + self.r["total_activos_de_uso"]
+            + self.r["total_por_cobrar_recuperable"]
+            - self.r["deudas"],
+            places=2,
+        )
+
+    def test_lo_por_cobrar_se_valua_por_lo_recuperable(self):
+        c = self.r["por_cobrar"][0]
+        self.assertLess(c["recuperable_base"], c["nominal_base"])
+        self.assertGreater(self.r["quita_por_incobrable"], 0)
+
+    def test_los_bienes_de_uso_no_son_capital_invertible(self):
+        self.assertGreater(self.r["total_activos_de_uso"], 0)
+        self.assertNotIn(
+            "camioneta",
+            json.dumps(json.loads((RAIZ / "datos" / "cartera.json").read_text(encoding="utf-8"))),
+        )
+
+    def test_convierte_los_pesos_a_la_moneda_base(self):
+        # 460.000 MXN a 17,0427 son unos 27.000 USD, no 460.000.
+        self.assertLess(self.r["total_activos_de_uso"], 30000)
+        self.assertGreater(self.r["total_activos_de_uso"], 25000)
+
+    def test_mide_el_colchon_contra_el_gasto_mensual(self):
+        self.assertAlmostEqual(
+            self.r["meses_de_gasto_en_capital"],
+            self.r["capital_invertible"] / self.r["gasto_mensual"],
+            places=6,
+        )
+
+    def test_sin_archivo_de_patrimonio_no_falla(self):
+        tmp = Path(tempfile.mkdtemp())
+        try:
+            for archivo in ("perfil.json", "cartera.json"):
+                shutil.copy(RAIZ / "datos" / archivo, tmp / archivo)
+            r = patrimonio.analizar(tmp)
+            self.assertEqual(r["total_activos_de_uso"], 0)
+            self.assertGreater(r["capital_invertible"], 0)
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
 
 
 class TestPlantillas(unittest.TestCase):
