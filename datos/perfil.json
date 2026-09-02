@@ -41,5 +41,21 @@
     "monto": 5600,
     "moneda": "USD",
     "notas": "Ingreso 6.600 menos 1.000 de ahorro = 95.439 MXN al cambio de hoy. Reemplazar por el gasto real cuando haya movimientos cargados."
+  },
+  "politica_de_liquidez": {
+    "_comentario": "Regla fija para no decidir cada vez de dónde sale la plata.",
+    "gasto_mensual_en_pesos_estimado": 101000,
+    "colchon_pesos_objetivo_meses": 1.5,
+    "colchon_pesos_objetivo_monto": 151500,
+    "moneda_colchon_pesos": "MXN",
+    "orden_de_uso": [
+      "1. Gastos en pesos salen del Apartado Open (ya están en pesos: sin spread y sin apuesta cambiaria).",
+      "2. Se repone el Apartado en cada cobro, convirtiendo SÓLO lo necesario para volver al objetivo.",
+      "3. Todo lo que sobra del sueldo se queda en USD.",
+      "4. Los dólares no se convierten para gastos corrientes: sólo si el Apartado queda por debajo del objetivo y el mes no alcanza.",
+      "5. Vender inversiones para gastar es el último recurso, nunca la primera opción."
+    ],
+    "regla_de_calce": "La plata que se va a gastar en pesos se guarda en pesos; la que no, en dólares. Convertir de más es tomar una posición de cambio sin decidirlo.",
+    "pagar_en_la_fecha_limite": "El Apartado paga 0,0231% por día. Pagar tarjetas y renta el día del vencimiento, no antes."
   }
 }
